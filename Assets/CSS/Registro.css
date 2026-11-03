@@ -1,0 +1,48 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body.fondo { background-color: hsl(210, 60%, 97%); }
+
+.header-mr {
+    background-color: #2f80ed;
+    color: white;
+    padding: 20px 30px;
+    justify-content: center;
+}
+
+.form-card {
+    border-top: 4px solid #0d47a1;
+    border-radius: 10px;
+}
+
+.form-card .seccion {
+    color: #0d47a1;
+    font-weight: 600;
+    border-bottom: 2px solid #90caf9;
+    padding-bottom: 4px;
+    margin: 8px 0 16px;
+}
+
+.form-label { font-weight: 500; }
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #1565c0;
+    box-shadow: 0 0 0 .2rem rgba(21, 101, 192, .25);
+}
+
+/* Campos calculados o automáticos */
+.form-control[readonly] { background-color: #e3f0fd; }
+
+.btn-club {
+    background-color: #1565c0;
+    border-color: #1565c0;
+    color: #fff;
+}
+.btn-club:hover { background-color: #0d47a1; border-color: #0d47a1; color: #fff; }
+
+.btn-outline-club { border-color: #1565c0; color: #1565c0; }
+.btn-outline-club:hover { background-color: #1565c0; color: #fff; }
