@@ -4,15 +4,14 @@ const formulario = document.getElementById("FormRegistro");
 
     event.preventDefault(); /*evita q se recargue la pagina al enviar el formulario*/
 
-    const botonGuardar = formulario.querySelector('button[type="susbmit"]');
+    const botonGuardar = formulario.querySelector('button[type="submit"]');
 
     //Lee los campos del formularios y los convierte en un objeto 
-    const asociado = Object.fromEntries(new FormData(formulario).entries)
-
+    const asociado = Object.fromEntries(new FormData(formulario).entries());
     botonGuardar.disabled = true; // Desahabilitar el boton mientras se procesa la solicitud 
 
     try{
-        const respuesta = await fetch(formulario.action, {method: 'POST',headers:{'Content-Tyoe':'application/json'},body:JSON.stringify(asociado)});
+        const respuesta = await fetch(formulario.action, {method: 'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(asociado)});
         
         // pasar la respuesta JSON a un objeto de JavaScript
         const resultado = await respuesta.json();
@@ -20,7 +19,7 @@ const formulario = document.getElementById("FormRegistro");
 
         document.getElementById("mensajeRegistro").dataset.tipo=''; 
 
-        docuemnt.getElementById("mensajeRegistro").textContent = resultado.mensaje;
+        document.getElementById("mensajeRegistro").textContent = resultado.mensaje;
 
         if (respuesta.ok && resultado.success) {
             formulario.reset(); //Limpiar el formulario si la solicitud fue exitosa

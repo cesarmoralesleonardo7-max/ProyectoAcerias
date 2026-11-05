@@ -24,7 +24,7 @@ try{if($_SERVER['REQUEST_METHOD'] !== 'POST'){
       
     }
 
-    if(!filter_var($datos['email'], FILTER_VALIDATE_EMAIL)){
+    if(!filter_var($datos['email'], FILTER_VALIDATE_EMAIL)=== false){
         http_response_code(400);
         throw new Exception("Email inválido");
     }  
