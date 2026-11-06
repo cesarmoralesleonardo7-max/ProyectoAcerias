@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../Assets/CSS/Registro.css">
     <title>CLUB ACERIAS - Registro de Asociados</title>
 </head>
+  
 
 <body class="fondo">
     <div class="header-mr d-flex justify-content-between align-items-center">
@@ -100,6 +101,32 @@
             </div>
         </div>
     </div>
+    <script>
+        document.getElementById("FormRegistro").addEventListener("submit", async function (e) {
+            e.preventDefault(); // evita que el navegador salte al PHP
+
+            const mensaje = document.getElementById("mensajeRegistro");
+            const datos = Object.fromEntries(new FormData(this).entries());
+
+            try {
+                const respuesta = await fetch("../Modelo/guardarAsociado.php", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(datos)
+                });
+
+                const resultado = await respuesta.json();
+
+                mensaje.textContent = resultado.mensaje;
+                mensaje.className = resultado.success ? "text-success mt-3" : "text-danger mt-3";
+
+                if (resultado.success) this.reset();
+            } catch (error) {
+                mensaje.textContent = "Error de conexión con el servidor";
+                mensaje.className = "text-danger mt-3";
+            }
+        });
+    </script>
 </body>
 
 </html>

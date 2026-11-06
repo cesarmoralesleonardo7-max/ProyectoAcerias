@@ -1,62 +1,107 @@
+
 <?php
 header('Content-Type: application/json; charset=utf-8');
-Require_once __DIR__ . '/../Modelo/Asociado.php';
 
-try{if($_SERVER['REQUEST_METHOD'] !== 'POST'){
-        http_response_code(400);
-        throw new Exception("Metodo HTTP no permitido");//Saltar catch y mostrar mensaje error
-   }
-   $json = file_get_contents('php://input');//leer el contendio JSON de la solicitud enviada por fetch
-   
-   $datos = json_decode($json, true);//decodificar el JSON en un array asociativo PHP
+require_once __DIR__ . '/../Modelo/Asociado.php';
 
-   if (!is_array($datos)|| json_last_error() !== JSON_ERROR_NONE) {
-        http_response_code(400);
-        throw new Exception("Datos inválidos");
+try {
+
+    // Verificar el método HTTP
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        http_response_code(405);
+        throw new Exception("Método HTTP no permitido");
     }
 
-    $campos=["documento","nombres","apellidos","fechaNacimiento","genero","direccionResidencia","ciudad","telefono","email"];
-    foreach($campos as $campo){
-        if(!isset($datos[$campo])){
+    // Recibir los datos enviados desde JavaScript
+    $json = file_get_contents('php://input');
+
+    // Convertir el JSON en un array de PHP
+    $datos = json_decode($json, true);
+
+    // Verificar que el JSON sea válido
+    if (!is_array($datos) || json_last_error() !== JSON_ERROR_NONE) {
+        http_response_code(400);
+        throw new Exception("Datos inválidos o JSON vacío");
+    }
+
+    // Campos obligatorios
+    $campos = [
+        "documento",
+        "nombres",
+        "apellidos",
+        "fechaNacimiento",
+        "genero",
+        "direccionResidencia",
+        "ciudad",
+        "telefono",
+        "email"
+    ];
+
+    // Verificar que lleguen todos los campos
+    foreach ($campos as $campo) {
+
+        if (!isset($datos[$campo]) || trim((string)$datos[$campo]) === '') {
             http_response_code(400);
-            throw new Exception("Falta el campo:". $campo); 
+            throw new Exception("Falta el campo: " . $campo);
         }
-      
     }
 
-    if(!filter_var($datos['email'], FILTER_VALIDATE_EMAIL)=== false){
+    // Validar el correo electrónico
+    if (filter_var($datos['email'], FILTER_VALIDATE_EMAIL) === false) {
         http_response_code(400);
         throw new Exception("Email inválido");
-    }  
+    }
 
+    // Crear el objeto asociado
     $asociado = new Asociado($datos);
 
-    $asociado->guardar();
-
+    // Guardar una sola vez en la base de datos
     $resultado = $asociado->guardar();
 
-    if($resultado){
+    if ($resultado) {
+
         http_response_code(201);
-        echo json_encode(["success"=> true,"mensaje" =>"Asociado guardado exitosamente"]);
-    }else{
+
+        echo json_encode([
+            "success" => true,
+            "mensaje" => "Asociado guardado exitosamente"
+        ]);
+
+    } else {
+
         http_response_code(500);
-        echo json_encode(["success" => false, "mensaje" => "Error al guardar el asociado"]);
+
+        echo json_encode([
+            "success" => false,
+            "mensaje" => "Error al guardar el asociado"
+        ]);
     }
 
-}catch(PDOException $e){
-    if($e->getCode() == 23000){//codigo de error para datos duplicados en MYSQL
-        http_response_code(409);//conflicto
-        echo json_encode(["success" => false, "mensaje" => "El documento ya existe"]);
-    }else{
+} catch (PDOException $e) {
+
+    if ($e->getCode() == 23000) {
+
+        http_response_code(409);
+
+        echo json_encode([
+            "success" => false,
+            "mensaje" => "El documento ya existe"
+        ]);
+
+    } else {
+
         http_response_code(500);
-        echo json_encode(["success" => false, "mensaje" => "Error de base de datos: " . $e->getMessage()]);
+
+        echo json_encode([
+            "success" => false,
+            "mensaje" => "Error de base de datos: " . $e->getMessage()
+        ]);
     }
 
-}catch (Exception $e){//errores dwe codigo por ejemplo metodo HTTP,darta inválida.
-    http_response_code(400);
-    echo json_encode(["success" => false, "mensaje" => $e->getMessage()]);
-   
+} catch (Exception $e) {
+
+    echo json_encode([
+        "success" => false,
+        "mensaje" => $e->getMessage()
+    ]);
 }
-
-
-

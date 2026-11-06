@@ -30,8 +30,8 @@ class Asociado {
     public function guardar(){
 
         $sql = "INSERT INTO asociados (documento, nombres, apellidos, fechaNacimiento, genero, direccionResidencia, ciudad, telefono, email) VALUES (:documento, :nombres, :apellidos, :fechaNacimiento, :genero, :direccionResidencia, :ciudad, :telefono, :email)";
-        $consulta=this->conexion->prepare($sql);
-        return $consulta->excute([
+        $consulta=$this->conexion->prepare($sql);
+        return $consulta->execute([
             ':documento' => $this->documento,
             ':nombres' => $this->nombres,
             ':apellidos' => $this->apellidos,
@@ -43,6 +43,4 @@ class Asociado {
             ':email' => $this->email
         ]);
     }
-
-
 }

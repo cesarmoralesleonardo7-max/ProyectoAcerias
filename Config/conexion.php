@@ -2,12 +2,12 @@
 
 class Conexion{
     private $host = "localhost";
-    private $baseDatos = "BDAcerias";
+    private $bd = "acerias";
     private $user = "root";
     private $password = "";
 
     public function conectar(){
-        $dsn ="mysql:host={$this->host};dbname={$this->baseDatos};charset=utf8mb4";
+        $dsn ="mysql:host={$this->host};dbname={$this->bd};charset=utf8mb4";
 
         return new PDO($dsn, $this->user, $this->password, [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
