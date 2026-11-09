@@ -35,6 +35,7 @@ try {
         "ciudad",
         "telefono",
         "email"
+        "password"
     ];
 
     // Verificar que lleguen todos los campos
