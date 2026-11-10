@@ -24,7 +24,7 @@ class Asociado {
         $this->ciudad=$datos['ciudad'];
         $this->telefono=$datos['telefono'];
         $this->email=$datos['email'];
-        $this->passwordHash = password_hash($datos['password'], PASSWORD_DEFAULT);
+        $this->password = password_hash($datos['password'], PASSWORD_DEFAULT);
 
         $conexionDb = new Conexion();
         $this->conexion = $conexionDb->conectar();

@@ -8,39 +8,53 @@ formulario.addEventListener("submit", async function (event) {
 
     //Lee los campos del formularios y los convierte en un objeto 
     const asociado = Object.fromEntries(new FormData(formulario).entries());
-    botonGuardar.disabled = true; // Desahabilitar el boton mientras se procesa la solicitud 
-    
+   
+
+
+
+    // Validar que la contraseña tenga mínimo 8 caracteres
+    if (Array.from(asociado.password).length < 8) {
+        document.getElementById("mensajeRegistro").textContent =
+            "La contraseña debe tener mínimo 8 caracteres";
+        return;
+    }
+
+    // Validar que las contraseñas coincidan
     if (asociado.password !== asociado.confirmarPassword) {
-        document.getElementById("mensajeRegistro").textContent = "Las contraseñas no coinciden.";}
+        document.getElementById("mensajeRegistro").textContent =
+            "Las contraseñas no coinciden";
+        return;
+    }
 
-        delete asociado.confirmarPassword;
+    // Eliminar el campo confirmarPassword
+    delete asociado.confirmarPassword;
+    botonGuardar.disabled = true; // Desahabilitar el boton mientras se procesa la solicitud 
+    document.getElementById("mensajeRegistro").textContent = "Guardando...";
+    document.getElementById("mensajeRegistro").dataset.tipo = ''; 
 
-        botonGuardar.disabled = true; // Habilitar el botón nuevamente después de procesar la solicitud
 
+    try {
 
+        const respuesta = await fetch(formulario.action, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(asociado) });
 
-        try {
+        // pasar la respuesta JSON a un objeto de JavaScript
+        const resultado = await respuesta.json();
+        document.getElementById("mensajeRegistro").textContent = "Guardando...";
 
-            const respuesta = await fetch(formulario.action, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(asociado) });
+        document.getElementById("mensajeRegistro").dataset.tipo = '';
 
-            // pasar la respuesta JSON a un objeto de JavaScript
-            const resultado = await respuesta.json();
-            document.getElementById("mensajeRegistro").textContent = "Guardando...";
+        document.getElementById("mensajeRegistro").textContent = resultado.mensaje;
 
-            document.getElementById("mensajeRegistro").dataset.tipo = '';
-
-            document.getElementById("mensajeRegistro").textContent = resultado.mensaje;
-
-            if (respuesta.ok && resultado.success) {
-                formulario.reset(); //Limpiar el formulario si la solicitud fue exitosa
-            }
-        } catch (error) {
-            console.error("Error al enviar el formulario:", error);
-            document.getElementById("mensajeRegistro").textContent =
-                "Ocurrió un error al enviar el formulario. Por favor,inténtelo de nuevo más tarde.";
-        } finally {
-            botonGuardar.disabled = false; // Habilitar el botón nuevamente después de procesar la solicitud
+        if (respuesta.ok && resultado.success) {
+            formulario.reset(); //Limpiar el formulario si la solicitud fue exitosa
         }
+    } catch (error) {
+        console.error("Error al enviar el formulario:", error);
+        document.getElementById("mensajeRegistro").textContent =
+            "Ocurrió un error al enviar el formulario. Por favor,inténtelo de nuevo más tarde.";
+    } finally {
+        botonGuardar.disabled = false; // Habilitar el botón nuevamente después de procesar la solicitud
+    }
 
 
-    });
+});

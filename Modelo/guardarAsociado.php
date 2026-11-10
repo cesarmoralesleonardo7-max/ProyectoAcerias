@@ -34,7 +34,7 @@ try {
         "direccionResidencia",
         "ciudad",
         "telefono",
-        "email"
+        "email",
         "password"
     ];
 
