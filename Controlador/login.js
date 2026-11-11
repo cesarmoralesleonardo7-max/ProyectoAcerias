@@ -1,24 +1,39 @@
-const usuarios = [
-    { usuario: 'admin@gmail.com', clave: '123', rol: 'admin', nombre: 'Admin MR' },
-    { usuario: 'pepito@gmail.com', clave: '123', rol: 'asociados', nombre: 'Juan Perez' }
-];
+const formulario = document.getElementById('FormInicioSesion');
+formulario.addEventListener('submit', async function (e) {
+    e.preventDefault();
 
-document.getElementById('FormInicioSesion').addEventListener('submit', function (e) {
-    e.preventDefault(); //No recarga la pagina
+    const boton = formulario.querySelector('button[type="submit"]');
+    const mensaje = formulario.querySelector('.mensajeInicioSesion');
 
-    const usuarioInput = document.getElementById('correo').value;
-    const claveInput = document.getElementById('contraseña').value;
+    boton.disabled = true;
 
-    const usuarioEncontrado = usuarios.find(
-        u => u.usuario === usuarioInput && u.clave === claveInput
-    );
+    try {
+        const respuesta = await fetch(formulario.action, {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify(Object.fromEntries(new FormData(formulario).entries()),
+            ),
+        });
 
-    if (usuarioEncontrado) {
+        const resultado = await respuesta.json();
+
+        if (!resultado.success) {
+            mensaje.textContent = "No fue posible iniciar sesión. Por favor, verifique sus credenciales e intente nuevamente.";
+            boton.disabled = false;
+            return;
+        }
+
         localStorage.setItem('logueado', 'true');
-        localStorage.setItem('rol', usuarioEncontrado.rol);
-        localStorage.setItem('nombre', usuarioEncontrado.nombre);
+        localStorage.setItem('rol', resultado.rol);
+        localStorage.setItem('nombre', resultado.nombre);
+        
         window.location.href = 'dashboard.html';
-    } else {
-        alert('Usuario o contraseña incorrectos');
+
+    } catch(error) {
+        console.error('Error al iniciar sesión:', error);
+        mensaje.textContent = "Ocurrió un error al intentar iniciar sesión. Por favor, inténtelo de nuevo más tarde.";
+    }finally{
+        boton.disabled = false;
     }
 });
+
