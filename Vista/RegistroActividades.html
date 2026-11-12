@@ -23,13 +23,11 @@
                     <form id="FormActividad" action="" method="POST">
                         <h6 class="seccion">Información de la actividad</h6>
                         <div class="row g-3">
-                            <div class="col-md-4">
-                                <label class="form-label" for="codigoActividad">Código</label>
-                                <input type="text" class="form-control" id="codigoActividad" readonly placeholder="Automático">
-                            </div>
+
                             <div class="col-md-8">
                                 <label class="form-label" for="nombreActividad">Nombre de la actividad</label>
-                                <input type="text" class="form-control" id="nombreActividad" required placeholder="Ej: Bingo bailable">
+                                <input type="text" class="form-control" id="nombreActividad" required
+                                    placeholder="Ej: Bingo bailable">
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label" for="fechaEvento">Fecha del evento</label>
@@ -44,56 +42,25 @@
                                     <option value="paipa">Paipa</option>
                                 </select>
                             </div>
-                            <div class="col-md-4">
-                                <label class="form-label" for="lugar">Lugar</label>
-                                <input type="text" class="form-control" id="lugar" placeholder="Salón, parque, sede...">
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label" for="descripcion">Descripción</label>
-                                <textarea class="form-control" id="descripcion" rows="2" placeholder="Opcional"></textarea>
-                            </div>
-                        </div>
 
-                        <h6 class="seccion mt-4">Recaudo</h6>
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <label class="form-label" for="totalRecaudado">Total recaudado</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">$</span>
-                                    <input type="number" class="form-control" id="totalRecaudado" required min="0">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label" for="numeroParticipantes">Participantes</label>
-                                <input type="number" class="form-control" id="numeroParticipantes" readonly placeholder="Según inscripciones">
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label" for="fondoClub">Fondo del club (50%)</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">$</span>
-                                    <input type="text" class="form-control" id="fondoClub" readonly>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label" for="repartoAsociados">Para asociados (50%)</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">$</span>
-                                    <input type="text" class="form-control" id="repartoAsociados" readonly>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label" for="valorParticipante">Por participante</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">$</span>
-                                    <input type="text" class="form-control" id="valorParticipante" readonly>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="d-flex gap-2 mt-4">
-                            <button type="submit" class="btn btn-club flex-fill"><i class="bi bi-save"></i> Guardar actividad</button>
-                            <button type="reset" class="btn btn-outline-club flex-fill">Limpiar formulario</button>
-                        </div>
+                            <h6 class="seccion mt-4">Recaudo</h6>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label" for="totalRecaudado">Total recaudado</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">$</span>
+                                        <input type="number" class="form-control" id="totalRecaudado" required min="0">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="d-flex gap-2 mt-4">
+                                <button type="submit" class="btn btn-club flex-fill"><i class="bi bi-save"></i> Guardar
+                                    actividad</button>
+                                <button type="reset" class="btn btn-outline-club flex-fill">Limpiar formulario</button>
+                            </div>
                     </form>
                 </div>
             </div>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Actividades</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Iconos Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <!-- Archivo CSS personalizado -->
+     <link rel="stylesheet" href="../Assets/CSS/Registro.css">
+
+</head>
+
+<body class="fondo">
+
+    <!-- Encabezado -->
+    <header class="header-mr d-flex align-items-center gap-3">
+
+        <h1 class="h3 mb-0">Actividades del club</h1>
+
+        <a href="dashboard.html" class="btn btn-outline-light">
+            <i class="bi bi-arrow-left"></i>
+            Volver al panel
+        </a>
+
+    </header>
+
+    <main class="container py-4">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <h2 class="h4 mb-0 seccion">
+                Listado de actividades
+            </h2>
+
+            <a href="RegistroActividades.html"
+               class="btn btn-club"
+               id="btnNuevaActividad">
+
+                <i class="bi bi-plus-lg"></i>
+                Nueva Actividad
+
+            </a>
+
+        </div>
+
+        <!-- Tabla de actividades -->
+        <div class="card shadow-sm form-card">
+
+            <div class="table-responsive">
+
+                <table class="table table-striped table-hover align-middle mb-0">
+
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">Actividad</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Municipio</th>
+                            <th scope="col">Total recaudado</th>
+
+                            <th id="encabezadoAcciones"
+                                class="d-none"
+                                scope="col">
+                                Acciones
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="listaActividades">
+                        <tr>
+                            <td colspan="4" class="text-center py-4">
+                                Cargando actividades...
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Notificaciones -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+
+        <div id="toastActividad"
+             class="toast align-items-center border-0"
+             role="status"
+             aria-live="polite"
+             aria-atomic="true">
+
+            <div class="d-flex">
+
+                <div id="mensajeActividades" class="toast-body"></div>
+
+                <button type="button"
+                        class="btn-close me-2 m-auto"
+                        data-bs-dismiss="toast"
+                        aria-label="Cerrar">
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../Controlador/ListarActividades.js"></script>
+
+
+
+</body>
+</html>
