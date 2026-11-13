@@ -8,11 +8,11 @@ class Actividad
 
     public function __construct()
     {
-        $this->conexion = Conexion();
+        $conexionDb=new Conexion();
         $this->conexion=$conexionDb->conectar();
 
     }
-    public function listar actividades(){
+    public function listarActividades(){
         $sql = "SELECT * FROM actividades ORDER BY fechaEvento ASC";
         $consulta = $this->conexion->prepare($sql);
         $consulta->execute();

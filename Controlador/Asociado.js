@@ -30,7 +30,7 @@ formulario.addEventListener("submit", async function (event) {
     delete asociado.confirmarPassword;
     botonGuardar.disabled = true; // Desahabilitar el boton mientras se procesa la solicitud 
     document.getElementById("mensajeRegistro").textContent = "Guardando...";
-    document.getElementById("mensajeRegistro").dataset.tipo = ''; 
+    document.getElementById("mensajeRegistro").dataset.tipo = '';  m
 
 
     try {
