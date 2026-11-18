@@ -26,16 +26,17 @@
 
                             <div class="col-md-8">
                                 <label class="form-label" for="nombreActividad">Nombre de la actividad</label>
-                                <input type="text" class="form-control" id="nombreActividad" required
+                                <input type="text" class="form-control" id="nombreActividad" name="nombreActividad"
+                                required
                                     placeholder="Ej: Bingo bailable">
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label" for="fechaEvento">Fecha del evento</label>
-                                <input type="date" class="form-control" id="fechaEvento" required>
+                                <input type="date" class="form-control" id="fechaEvento"  name="fechaEvento"required>
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label" for="municipio">Municipio</label>
-                                <select class="form-select" id="municipio" required>
+                                <select class="form-select" id="municipio" name="municipio" required>
                                     <option value="" selected disabled>Seleccione</option>
                                     <option value="duitama">Duitama</option>
                                     <option value="sogamoso">Sogamoso</option>
@@ -50,7 +51,7 @@
                                     <label class="form-label" for="totalRecaudado">Total recaudado</label>
                                     <div class="input-group">
                                         <span class="input-group-text">$</span>
-                                        <input type="number" class="form-control" id="totalRecaudado" required min="0">
+                                        <input type="number" class="form-control" id="totalRecaudado" name="totalRecaudado "required min="0">
                                     </div>
                                 </div>
 
