@@ -1,16 +1,15 @@
-const listaActividades = document.getElementById('listaActividades');
-let esAdministrador = false;
+
+const listaActividades = document.getElementById("listaActividades"); //su valor permance unico
+let esAdministrador = false; //su valor puede cambiar
 let actividades = [];
-let accionesConfiguradas=false;
-const formularioActividad=document.getElementById("FormActividad");
+let accionesConfiguradas = false;
+const formularioActividad = document.getElementById("FormActividad");
 
 
 async function solicitarApi(metodo, datos) {
     const opciones = {
         method: metodo,
-        headers: {
-            'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
     }
 
     if (datos) {
@@ -23,6 +22,7 @@ async function solicitarApi(metodo, datos) {
     if (respuesta.status === 401) {
         window.location.href = "login.html";
     }
+
     if (!respuesta.ok || !resultado.success) {
         throw new Error(resultado.mensaje || "Error en la solicitud");
     }
@@ -30,9 +30,10 @@ async function solicitarApi(metodo, datos) {
     return resultado;
 }
 
+
 async function cargarActividades() {
     try {
-        const resultado = await solicitarApi('GET');
+        const resultado = await solicitarApi("GET");
         esAdministrador = resultado.rol === "admin";
 
         configurarAcciones();
@@ -41,10 +42,11 @@ async function cargarActividades() {
         mostrarActividades();
 
     } catch (error) {
-
         alert("Error al cargar las actividades: " + error.message);
     }
 }
+
+
 function mostrarActividades() {
     listaActividades.replaceChildren();
 
@@ -53,27 +55,27 @@ function mostrarActividades() {
         const celda = document.createElement("td");
         celda.colSpan = esAdministrador ? 5 : 4;
         celda.className = "text-center py-4 text-muted";
-        celda.textContent = "No hay actividades disponibles";
+        celda.textContent = "No hay actividades disponibles.";
         fila.append(celda);
         listaActividades.append(fila);
         return;
     }
 
-
     actividades.forEach((actividad) => {
         const fila = document.createElement("tr");
+
         fila.append(
             crearCelda(actividad.nombreActividad),
             crearCelda(actividad.fechaEvento),
             crearCelda(actividad.municipio),
-            crearCelda(actividad.totalRecaudado === null ? "Pendiente"
-                : Number(actividad.totalRecaudado).toLocaleString("es-CO",
-                    {
+            crearCelda(
+                actividad.totalRecaudado === null ? "Pendiente"
+                    : Number(actividad.totalRecaudado).toLocaleString("es-CO", {
                         style: "currency", currency: "COP",
                     }),
             ),
-
         );
+
         if (esAdministrador) {
             const acciones = document.createElement("td");
             acciones.className = "text-nowrap";
@@ -86,18 +88,20 @@ function mostrarActividades() {
 
             const botonEliminar = document.createElement("button");
             botonEliminar.type = "button";
-            botonEliminar.className = "btn btn-sm btn-outline-primary me-2";
+            botonEliminar.className = "btn btn-sm btn-outline-danger me-2";
             botonEliminar.innerHTML = '<i class="bi bi-trash"></i>';
-            botonEliminar.addEventListener("click", () => eliminarActividad(actividad));
+            botonEliminar.addEventListener("click", () =>
+                eliminarActividad(actividad),
+            );
 
             acciones.append(botonEditar, botonEliminar);
             fila.append(acciones);
         }
+
         listaActividades.append(fila);
-
-
     });
 }
+
 
 function crearCelda(texto) {
     const celda = document.createElement("td");
@@ -105,78 +109,56 @@ function crearCelda(texto) {
     return celda;
 }
 
+
 async function eliminarActividad(actividad) {
-    const confirmar = window.confirm(`¿Desea eliminar la actividad "${actividad.nombreActividad}"?`,);
+    const confirmar = window.confirm(
+        `¿Desea eliminar la actividad "${actividad.nombreActividad}"?`,
+    );
 
     if (!confirmar) {
         return;
     }
 
-    try{
-        await solicitarApi("DELETE",{idActividad:actividad.idActividad});
+    try {
+        await solicitarApi("DELETE", { idActividad: actividad.idActividad });
         await cargarActividades();
-        alert("actividad eliminada correctamente");
-    }catch(error){
-        alert(error.message); 
+        alert("Actividad eliminada correctamente");
+
+    } catch (error) {
+        alert(error.message);
     }
 }
 
-function configurarAcciones(){
-    if(accionesConfiguradas){
+
+function configurarAcciones() {
+    if (accionesConfiguradas) {
         return;
     }
+
     const botonNueva = document.getElementById("btnNuevaActividad");
     const encabezadoAcciones = document.getElementById("encabezadoAcciones");
 
-    if(esAdministrador){
-        botonNueva.classList.remove("d-none");
-        encabezadoAcciones.classList.remove("d-none");
+    if (esAdministrador) {
+        if (botonNueva) {
+            botonNueva.classList.remove("d-none");
+        }
+
+        if (encabezadoAcciones) {
+            encabezadoAcciones.classList.remove("d-none");
+        }
+
         accionesConfiguradas = true;
         return;
     }
 }
 
-   function abrirEdicion(actividad) {
-    formularioActividad.reset();
 
-    document.getElementById("idActividad").value = actividad.idActividad;
-    document.getElementById("nombreActividad").value = actividad.nombreActividad;
-    document.getElementById("fechaEvento").value = actividad.fechaEvento;
-    document.getElementById("municipio").value = actividad.municipio;
-    document.getElementById("totalRecaudado").value =
-        actividad.totalRecaudado ?? "";
+function abrirEdicion(actividad) {
+    sessionStorage.setItem("actividadEditar", JSON.stringify(actividad));
+    window.location.href = "RegistroActividades.html";
+}
 
 
-        document.getElementById("totalRecaudado").classList.remove("d-none");
-    
-
-    formularioActividad.addEventListener("submit",async(evento)=>{
-        evento.preventDefault();
-        const idActividad=document.getElementById("idActividad").value;
-
-        const datos={
-            nombreActividad:document.getElementById("nombreActividad").value.trim(),
-            fechaEvento:document.getElementById("fechaEvento").value,
-            municipio:document.getElementById("municipio").value.trim(),
-        }
-
-        if(idActividad){
-            datos.idActividad = Number(idActividad)
-            const total = document.getElementById("totalRecaudado").value;
-            datos.totalRecaudado = total=== "" ? null : Number(total); 
-
-        }
-
-        try{
-            await solicitarApi(idActividad ? "PUT" :"POST",datos);
-            alert("actualizado correctamente");
-            cargarActividades();
-       }catch(error){
-        alert(error.message);
-       }
-
-    }); 
-    }
-
-cargarActividades();
-
+if (listaActividades) {
+    cargarActividades();
+}
