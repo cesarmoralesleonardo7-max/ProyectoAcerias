@@ -46,4 +46,107 @@ class Asociado {
             ':password' => $this->password,
         ]);
     }
+    }public function obtenerAsociados()
+    {
+        $sql = "SELECT documento, nombres, apellidos,
+                fechaNacimiento, genero, direccionResidencia,
+                ciudad, telefono, email, rol
+                FROM asociados ORDER BY nombres ASC";
+
+        $consulta = $this->conexion->prepare($sql);
+        $consulta->execute();
+
+        return $consulta->fetchAll();
+    }
+
+    public function filtrarGenero($genero)
+    {
+        $sql = "SELECT documento, nombres, apellidos,
+                fechaNacimiento, genero, direccionResidencia,
+                ciudad, telefono, email, rol
+                FROM asociados WHERE genero = :genero";
+
+        $consulta = $this->conexion->prepare($sql);
+
+        $consulta->execute([
+            ':genero' => $genero
+        ]);
+
+        return $consulta->fetchAll();
+    }
+
+    public function filtrarCiudad($ciudad)
+    {
+        $sql = "SELECT documento, nombres, apellidos,
+                fechaNacimiento, genero, direccionResidencia,
+                ciudad, telefono, email, rol
+                FROM asociados WHERE ciudad = :ciudad";
+
+        $consulta = $this->conexion->prepare($sql);
+
+        $consulta->execute([
+            ':ciudad' => $ciudad
+        ]);
+
+        return $consulta->fetchAll();
+    }
+
+    public function editar($datos)
+    {
+        $sql = "UPDATE asociados SET
+                nombres = :nombres,
+                apellidos = :apellidos,
+                fechaNacimiento = :fechaNacimiento,
+                genero = :genero,
+                direccionResidencia = :direccionResidencia,
+                ciudad = :ciudad,
+                telefono = :telefono,
+                email = :email
+                WHERE documento = :documento";
+
+        $consulta = $this->conexion->prepare($sql);
+
+        $consulta->execute([
+            ':nombres' => $datos['nombres'],
+            ':apellidos' => $datos['apellidos'],
+            ':fechaNacimiento' => $datos['fechaNacimiento'],
+            ':genero' => $datos['genero'],
+            ':direccionResidencia' => $datos['direccionResidencia'],
+            ':ciudad' => $datos['ciudad'],
+            ':telefono' => $datos['telefono'],
+            ':email' => $datos['email'],
+            ':documento' => $datos['documento']
+        ]);
+
+        if ($consulta->rowCount() > 0) {
+            return true;
+        }
+
+        $verificar = $this->conexion->prepare(
+            "SELECT documento FROM asociados
+            WHERE documento = :documento"
+        );
+
+        $verificar->execute([
+            ':documento' => $datos['documento']
+        ]);
+
+        if ($verificar->fetch()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function eliminar($documento)
+    {
+        $sql = "DELETE FROM asociados
+                WHERE documento = :documento";
+
+        $consulta = $this->conexion->prepare($sql);
+
+        $consulta->execute([
+            ':documento' => $documento
+        ]);
+    
 }
