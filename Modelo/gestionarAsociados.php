@@ -76,16 +76,22 @@ try {
             $filtro = $_GET["filtro"] ?? "todos";
             $valor = $_GET["valor"] ?? "";
 
-            if ($filtro === "todos"){   
-            $asociados = $asociado->obtenerAsociados();
+            if ($filtro === "todos") {
+
+                $asociados = $asociado->obtenerAsociados();
+
             } else if ($filtro === "genero" && $valor !== "") {
+
                 $asociados = $asociado->filtrarGenero($valor);
+
             } else if ($filtro === "ciudad" && $valor !== "") {
-                $asociados = $asociado->filtrarCiudad($valor);}
+
+                $asociados = $asociado->filtrarCiudad($valor);
+
             } else {
+
                 http_response_code(400);
                 throw new Exception("Filtro inválido");
-
             }
 
             $resultado = [
@@ -163,7 +169,6 @@ try {
             "success" => false,
             "mensaje" => "Error en la base de datos"
         ]);
-
     }
 
 } catch (Exception $e) {

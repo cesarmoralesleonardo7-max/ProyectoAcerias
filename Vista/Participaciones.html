@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+    <link rel="stylesheet" href="../Assets/CSS/Registro.css">
+
+    <title>CLUB ACERIAS - Participaciones</title>
+</head>
+
+<body class="fondo">
+
+    <div class="header-mr d-flex justify-content-between align-items-center">
+
+        <h3>Participación en actividades</h3>
+
+        <a href="ListarActividades.html" class="btn btn-light btn-sm">
+
+            <i class="bi bi-arrow-left"></i>
+            Volver a actividades
+
+        </a>
+
+    </div>
+
+    <div class="container py-4">
+
+        <div id="mensajeGeneral" class="mb-3"></div>
+
+        <!-- Consulta 11 -->
+
+        <div class="card form-card shadow-sm p-4 mb-4">
+
+            <h5 class="seccion">
+                Consultar actividades por asociado
+            </h5>
+
+            <p class="text-muted">
+                Consulta en cuántas actividades ha participado
+                un asociado mediante su documento.
+            </p>
+
+            <form id="FormCantidad">
+
+                <div class="row g-3 align-items-end">
+
+                    <div class="col-md-7">
+
+                        <label class="form-label" for="documentoConsulta">
+                            Documento del asociado
+                        </label>
+
+                        <input type="text"
+                            class="form-control"
+                            id="documentoConsulta"
+                            placeholder="Ingrese el documento"
+                            required>
+
+                    </div>
+
+                    <div class="col-md-3">
+
+                        <button type="submit" class="btn btn-club w-100">
+
+                            <i class="bi bi-search"></i>
+                            Consultar
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+            <div id="mensajeCantidad" class="mt-3"></div>
+
+            <div id="resultadoCantidad"
+                class="alert alert-info mt-4 d-none">
+
+                <p class="mb-2">
+                    Asociado:
+                    <strong id="nombreConsulta"></strong>
+                </p>
+
+                <p class="mb-2">
+                    Documento:
+                    <strong id="documentoResultado"></strong>
+                </p>
+
+                <p class="mb-0">
+                    Cantidad de actividades:
+                    <strong id="cantidadActividades">0</strong>
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- Consulta 14 -->
+
+        <div class="card form-card shadow-sm p-4 mb-4">
+
+            <h5 class="seccion">
+                Consultar participantes por actividad
+            </h5>
+
+            <p class="text-muted">
+                Busca una actividad por su nombre y consulta
+                los asociados que participaron.
+            </p>
+
+            <form id="FormParticipantes">
+
+                <div class="row g-3 align-items-end">
+
+                    <div class="col-md-7">
+
+                        <label class="form-label"
+                            for="nombreActividadConsulta">
+
+                            Nombre de la actividad
+
+                        </label>
+
+                        <input type="text"
+                            class="form-control"
+                            id="nombreActividadConsulta"
+                            placeholder="Ej: Bingo bailable"
+                            required>
+
+                    </div>
+
+                    <div class="col-md-3">
+
+                        <button type="submit" class="btn btn-club w-100">
+
+                            <i class="bi bi-search"></i>
+                            Buscar
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+            <div id="mensajeParticipantes" class="mt-3"></div>
+
+            <div id="resultadoParticipantes"
+                class="table-responsive mt-4 d-none">
+
+                <table class="table table-striped table-hover">
+
+                    <thead class="table-dark">
+
+                        <tr>
+                            <th>Actividad</th>
+                            <th>Documento</th>
+                            <th>Nombre del asociado</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="listaParticipantes">
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="../Controlador/Participaciones.js"></script>
+
+</body>
+
+</html>

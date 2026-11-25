@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Gestión de pagos</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../Assets/CSS/Registro.css">
+
+</head>
+
+<body class="fondo">
+
+    <body class="fondo">
+
+    <div class="header-mr d-flex justify-content-between align-items-center">
+
+    <h3 class="mb-0">Pagos Del Club</h3>
+
+    <a href="dashboard.html" class="btn btn-outline-light">
+        <i class="bi bi-arrow-left"></i>
+        Volver al panel
+    </a>
+
+</div>
+
+    <main class="container py-4">
+
+        <h2 class="h4 mb-2 seccion">Historial De Pagos</h2>
+
+
+        <!-- Filtros de consulta -->
+
+        <div class="card shadow-sm form-card p-3 mb-4">
+
+            <form id="FormFiltro">
+
+                <div class="row g-3 align-items-end">
+
+                    <div class="col-md-4">
+
+                        <label for="filtro" class="form-label">
+                            Filtrar por
+                        </label>
+
+                        <select id="filtro" class="form-select">
+
+                            <option value="todos">
+                                Todos los pagos
+                            </option>
+
+                            <option value="total">
+                                Total pagado por asociado
+                            </option>
+
+                            <option value="prestamo">
+                                Código del préstamo
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-md-4 d-none" id="grupoDocumento">
+
+                        <label for="filtroDocumento" class="form-label">
+                            Documento del asociado
+                        </label>
+
+                        <input type="text" id="filtroDocumento"
+                            class="form-control"
+                            placeholder="Ingrese el documento">
+
+                    </div>
+
+                    <div class="col-md-4 d-none" id="grupoPrestamo">
+
+                        <label for="filtroPrestamo" class="form-label">
+                            Código del préstamo
+                        </label>
+
+                        <input type="number" id="filtroPrestamo"
+                            class="form-control"
+                            min="1"
+                            placeholder="Ingrese el código">
+
+                    </div>
+
+                    <div class="col-md-auto">
+
+                        <button type="submit" class="btn btn-club">
+                            <i class="bi bi-search"></i>
+                            Consultar
+                        </button>
+
+                        <button type="button" id="btnLimpiar"
+                            class="btn btn-outline-club">
+                            Limpiar
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+        <div id="mensajePagos" class="mb-3"></div>
+
+        <!-- Total pagado por asociado -->
+
+        <div class="card shadow-sm form-card p-4 mb-4 d-none"
+            id="contenedorTotal">
+
+            <h6 class="seccion">Total pagado por asociado</h6>
+
+            <p>
+                Asociado:
+                <strong id="nombreTotal"></strong>
+            </p>
+
+            <p>
+                Documento:
+                <strong id="documentoTotal"></strong>
+            </p>
+
+            <h3 id="totalPagado">$0</h3>
+
+        </div>
+
+        <!-- Historial de pagos: solo lectura -->
+
+        <div class="card shadow-sm form-card" id="contenedorTabla">
+
+            <div class="table-responsive">
+
+                <table class="table table-striped table-hover align-middle mb-0">
+
+                    <thead class="table">
+
+                        <tr class="encabezado">
+
+                            <th>Código del pago</th>
+                            <th>Código del préstamo</th>
+                            <th>Documento</th>
+                            <th>Nombres</th>
+                            <th>Apellidos</th>
+                            <th>Fecha de pago</th>
+                            <th>Valor pagado</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="listaPagos">
+
+                        <tr>
+
+                            <td colspan="7" class="text-center py-4">
+                                Cargando pagos...
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <script src="../Controlador/Pagos.js"></script>
+
+</body>
+
+</html>
