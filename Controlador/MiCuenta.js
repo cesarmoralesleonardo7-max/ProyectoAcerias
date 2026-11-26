@@ -165,7 +165,7 @@ function mostrarActividades(actividades) {
         const fila = document.createElement("tr");
 
         const inscrito = Number(actividad.participa) === 1;
-        const finalizada = actividad.fechaEvento < hoy;
+        const finalizada = actividad.fechaEvento <= hoy;
 
         const valores = [
             actividad.nombreActividad,
